@@ -1,6 +1,11 @@
 export type DomNode = Text | Element | null;
 export type XmlNamespace = 'html' | 'svg';
 
+interface XmlNamespaces {
+    selfNs: XmlNamespace;
+    childNs: XmlNamespace;
+}
+
 const nsTable = {
     html: 'http://www.w3.org/1999/xhtml',
     svg: 'http://www.w3.org/2000/svg'
@@ -108,4 +113,23 @@ export function setProp(meta: Meta, elem: DomNode, name: string, value: any) {
             elem.setAttribute(name, value);
             return;
     }
+}
+
+function guessNs(tagName: string, currentNs: XmlNamespace): XmlNamespaces {
+    if (tagName === 'svg') {
+        return {
+            selfNs: 'svg',
+            childNs: 'svg'
+        };
+    }
+    if (tagName === 'foreignObject') {
+        return {
+            selfNs: 'svg',
+            childNs: 'html'
+        }
+    }
+    return {
+        selfNs: currentNs,
+        childNs: currentNs
+    };
 }
