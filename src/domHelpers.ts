@@ -26,6 +26,20 @@ export function append(meta: Meta, parentMeta: Meta, parent: DomNode, elm: DomNo
     parent.appendChild(elm);
 }
 
+export function appendSequence(meta: Meta, parentMeta: Meta, parent: DomNode, elems: DomNode[]) {
+    if (elems.length <= 0 || parent === null) {
+        return;
+    }
+
+    for (let elem of elems) {
+        if (!elem) {
+            throw new Error('empty child');
+        }
+
+        parent.appendChild(elem);
+    }
+}
+
 export function closest(meta: Meta, from: DomNode, matcher: (elem: DomNode) => boolean): DomNode {
     let elem = from;
 
@@ -39,14 +53,18 @@ export function closest(meta: Meta, from: DomNode, matcher: (elem: DomNode) => b
     return null;
 }
 
-export function create(meta: Meta, tagName: string): [DomNode, Meta] {
+export function create(meta: Meta, tagName: string): [DomNode, Meta, Meta] {
     const {childNs, selfNs} = guessNs(tagName, meta.ns);
     const elem = document.createElementNS(nsTable[selfNs], tagName);
     const nestedMeta: Meta = {
         ...meta,
         ns: childNs
     };
-    return [elem, nestedMeta];
+    const selfMeta: Meta = {
+        ...meta,
+        ns: selfNs
+    };
+    return [elem, selfMeta, nestedMeta];
 }
 
 export function createPlaceholder(meta: Meta): DomNode {
@@ -67,6 +85,20 @@ export function getData(meta: Meta, elem: DomNode): Data {
     return (elem as HTMLElement).dataset;
 }
 
+export function remove(meta: Meta, elem: DomNode) {
+    if (!elem) {
+        throw new Error('empty child');
+    }
+
+    const parent = elem.parentElement;
+
+    if (!parent) {
+        throw new Error('not mounted');
+    }
+
+    parent.removeChild(elem);
+}
+
 export function replace(meta: Meta, oldElem: DomNode, newElm: DomNode): any {
     if (!oldElem) {
         return;
@@ -83,6 +115,31 @@ export function replace(meta: Meta, oldElem: DomNode, newElm: DomNode): any {
     }
 
     parent.replaceChild(newElm as HTMLElement, oldElem as HTMLElement);
+}
+
+export function replaceSequence(meta: Meta, oldElems: DomNode[], newElms: DomNode[]): any {
+    const lastOld = oldElems[oldElems.length - 1];
+
+    if (!lastOld) {
+        throw new Error('no placeholder');
+    }
+
+    const parent = lastOld.parentElement;
+
+    if (!parent) {
+        throw new Error('no parent');
+    }
+
+    for (let elem of newElms) {
+        if (!elem) {
+            throw new Error('empty child');
+        }
+        parent.insertBefore(elem, lastOld);
+    }
+
+    for (let elem of oldElems) {
+        remove(meta, elem);
+    }
 }
 
 export function setData(meta: Meta, elem: DomNode, value: Data) {

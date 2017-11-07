@@ -6,15 +6,20 @@ import {
     Component
 } from 'hv-jsx';
 
+import {Tags} from './domTypes';
+
 import {Meta, DomNode, Data, XmlNamespace} from './domHelpers';
 
 import {
     append,
+    appendSequence,
     closest,
     create,
     createPlaceholder,
     createTextNode,
     getData,
+    // remove,
+    replaceSequence,
     replace,
     setData,
     setProp
@@ -28,12 +33,14 @@ export const dom: Target<DomNode, Meta, number, Data> = {
     createPlaceholder,
     createTextNode,
     getData,
+    // remove,
+    replaceSequence,
     replace,
     setData,
     setProp
 };
 
-export const targetMeta: Meta = {
+export const defaultTargetMeta: Meta = {
     ns: 'html'
 };
 
@@ -41,15 +48,29 @@ export interface MetaParams {
     ns?: XmlNamespace;
 }
 
-export function renderDom(jsx: HvNode, params: MetaParams = {}): DomNode {
+export function renderDom(jsx: HvNode, params: MetaParams = {}): DomNode[] {
     const contextMeta: ContextMeta = {
         target: dom,
-        targetMeta: targetMeta
+        targetMeta: defaultTargetMeta
     } as any as ContextMeta;
 
-    return jsx.targetRender(contextMeta) as DomNode;
+    return jsx.targetRender(contextMeta) as DomNode[];
+}
+
+export function renderIn(where: HTMLElement, params: MetaParams, jsx: HvNode) {
+    where.innerHTML = '';
+
+    const content = renderDom(jsx, params);
+
+    appendSequence(defaultTargetMeta, defaultTargetMeta, where, content);
 }
 
 export function closestComponent<T extends Component<any>>(elem: DomNode): T | null {
-    return jsxClosestComponent(targetMeta, dom, elem);
+    return jsxClosestComponent(defaultTargetMeta, dom, elem);
+}
+
+declare global {
+    namespace JSX {
+        interface IntrinsicElements extends Tags {}
+    }
 }
