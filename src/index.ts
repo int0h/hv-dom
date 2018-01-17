@@ -1,7 +1,8 @@
 import {
     Target,
-    HvNode,
     ContextMeta,
+    Children,
+    targetRenderChildren,
     closestComponent as jsxClosestComponent,
     Component
 } from 'hv-jsx';
@@ -48,16 +49,16 @@ export interface MetaParams {
     ns?: XmlNamespace;
 }
 
-export function renderDom(jsx: HvNode, params: MetaParams = {}): DomNode[] {
+export function renderDom(jsx: Children, params: MetaParams = {}): DomNode[] {
     const contextMeta: ContextMeta = {
         target: dom,
         targetMeta: defaultTargetMeta
     } as any as ContextMeta;
 
-    return jsx.targetRender(contextMeta) as DomNode[];
+    return targetRenderChildren(contextMeta, jsx) as DomNode[];
 }
 
-export function renderIn(where: HTMLElement, params: MetaParams, jsx: HvNode) {
+export function renderIn(where: HTMLElement, params: MetaParams, jsx: Children) {
     where.innerHTML = '';
 
     const content = renderDom(jsx, params);
