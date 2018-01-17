@@ -2,7 +2,7 @@ import {HyperValue} from 'hv';
 
 export type EventHandler = () => void | boolean;
 
-export interface HTMLAttributes {
+export interface HTMLAttributes extends JSX.GlobalProps {
     accessKey?: string | HyperValue<string>;
     class?: string | HyperValue<string>;
     className?: string | HyperValue<string>;
