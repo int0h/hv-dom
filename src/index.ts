@@ -4,8 +4,10 @@ import {
     Children,
     targetRenderChildren,
     closestComponent as jsxClosestComponent,
-    Component
+    Component,
 } from 'hv-jsx';
+
+import './events';
 
 import {Tags} from './domTypes';
 
