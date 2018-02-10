@@ -125,20 +125,25 @@ export function replaceSequence(meta: Meta, oldElems: DomNode[], newElms: DomNod
     }
 
     const parent = lastOld.parentElement;
+    const nextSibling = lastOld.nextSibling;
 
     if (!parent) {
         throw new Error('no parent');
+    }
+
+    for (let elem of oldElems) {
+        remove(meta, elem);
     }
 
     for (let elem of newElms) {
         if (!elem) {
             throw new Error('empty child');
         }
-        parent.insertBefore(elem, lastOld);
-    }
-
-    for (let elem of oldElems) {
-        remove(meta, elem);
+        if (nextSibling) {
+            parent.insertBefore(elem, nextSibling);
+        } else {
+            parent.appendChild(elem);
+        }
     }
 }
 
@@ -159,17 +164,12 @@ export function setProp(meta: Meta, elem: DomNode, name: string, value: any) {
         throw new Error('cannot set property of null');
     }
 
-    switch (meta.ns) {
-        case 'html':
-            if (typeof value === 'string' || typeof value === 'number') {
-                elem.setAttribute(name, String(value));
-            }
-            (elem as any)[name] = value;
-            return;
-        case 'svg':
-            elem.setAttribute(name, value);
-            return;
+    if (meta.ns === 'html' && name in elem) {
+        (elem as any)[name] = value;
+        return;
     }
+
+    elem.setAttribute(name, value);
 }
 
 function guessNs(tagName: string, currentNs: XmlNamespace): XmlNamespaces {
@@ -183,7 +183,7 @@ function guessNs(tagName: string, currentNs: XmlNamespace): XmlNamespaces {
         return {
             selfNs: 'svg',
             childNs: 'html'
-        }
+        };
     }
     return {
         selfNs: currentNs,
