@@ -12,6 +12,7 @@ export interface HTMLAttributes extends JSX.GlobalProps {
     draggable?: boolean | HyperValue<boolean>;
     hidden?: boolean | HyperValue<boolean>;
     id?: string | HyperValue<string>;
+    innerHTML?: string | HyperValue<string>;
     lang?: string | HyperValue<string>;
     slot?: string | HyperValue<string>;
     spellCheck?: boolean | HyperValue<boolean>;
@@ -207,7 +208,7 @@ export type RestTags = 'abbr' | 'address' | 'area' | 'article' | 'aside' | 'audi
 
 export type Rest = {
     [key in RestTags]: HTMLAttributes;
-}
+};
 
 export interface Tags extends Rest {
     a: AnchorHTMLAttributes;
