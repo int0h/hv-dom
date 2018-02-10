@@ -5,6 +5,7 @@ import {
     targetRenderChildren,
     closestComponent as jsxClosestComponent,
     Component,
+    debugTargetProxy,
 } from 'hv-jsx';
 
 import './events';
@@ -53,7 +54,7 @@ export interface MetaParams {
 
 export function renderDom(jsx: Children, params: MetaParams = {}): DomNode[] {
     const contextMeta: ContextMeta = {
-        target: dom,
+        target: debugTargetProxy(dom),
         targetMeta: defaultTargetMeta
     } as any as ContextMeta;
 
