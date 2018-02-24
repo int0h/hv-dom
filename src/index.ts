@@ -14,6 +14,8 @@ import {Tags} from './domTypes';
 
 import {Meta, DomNode, Data, XmlNamespace} from './domHelpers';
 
+import './style';
+
 import {
     append,
     appendSequence,

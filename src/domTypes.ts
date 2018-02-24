@@ -1,8 +1,11 @@
 import {HyperValue} from 'hv';
 
-export type EventHandler = () => void | boolean;
+import {StyleProp} from './style';
 
-export interface HTMLAttributes extends JSX.GlobalProps {
+import {EventHandler} from './eventTypes';
+export {EventHandler} from './eventTypes';
+
+export interface HTMLAttributes extends JSX.GlobalProps, JSX.IntrinsicProps {
     accessKey?: string | HyperValue<string>;
     class?: string | HyperValue<string>;
     className?: string | HyperValue<string>;
@@ -19,6 +22,7 @@ export interface HTMLAttributes extends JSX.GlobalProps {
     tabIndex?: number | HyperValue<number>;
     title?: string | HyperValue<string>;
     role?: string | HyperValue<string>;
+    style?: StyleProp;
 }
 
 export interface AnchorHTMLAttributes extends HTMLAttributes {
@@ -106,7 +110,7 @@ export interface InputHTMLAttributes extends HTMLAttributes {
     value?: string | string[] | number | HyperValue<string | string[] | number>;
     width?: number | string | HyperValue<number | string>;
 
-    onChange?: EventHandler;
+    onChange?: EventHandler<Event>;
 }
 
 export interface MediaHTMLAttributes extends HTMLAttributes {
@@ -138,7 +142,7 @@ export interface TextareaHTMLAttributes extends HTMLAttributes {
     value?: string | string[] | number | HyperValue<string | string[] | number>;
     wrap?: string | HyperValue<string>;
 
-    onChange?: EventHandler;
+    onChange?: EventHandler<Event>;
 }
 
 export interface TableHTMLAttributes extends HTMLAttributes {
@@ -156,7 +160,7 @@ export interface SelectHTMLAttributes extends HTMLAttributes {
     required?: boolean | HyperValue<boolean>;
     size?: number | HyperValue<number>;
     value?: string | string[] | number | HyperValue<string | string[] | number>;
-    onChange?: EventHandler;
+    onChange?: EventHandler<Event>;
 }
 
 export interface OptionHTMLAttributes extends HTMLAttributes {
@@ -177,12 +181,16 @@ export interface ScriptHTMLAttributes extends HTMLAttributes {
     type?: string | HyperValue<string>;
 }
 
-export interface StyleHTMLAttributes extends HTMLAttributes {
-    media?: string | HyperValue<string>;
-    nonce?: string | HyperValue<string>;
-    scoped?: boolean | HyperValue<boolean>;
-    type?: string | HyperValue<string>;
+export interface LabelHTMLAttributes extends HTMLAttributes {
+    for?: string | HyperValue<string>;
 }
+
+// export interface StyleHTMLAttributes extends HTMLAttributes {
+//     media?: string | HyperValue<string>;
+//     nonce?: string | HyperValue<string>;
+//     scoped?: boolean | HyperValue<boolean>;
+//     type?: string | HyperValue<string>;
+// }
 
 export type RestTags = 'abbr' | 'address' | 'area' | 'article' | 'aside' | 'audio'
     | 'b' | 'base' | 'bdi' | 'bdo' | 'big' | 'blockquote' | 'body' | 'br' | 'button'
@@ -193,7 +201,7 @@ export type RestTags = 'abbr' | 'address' | 'area' | 'article' | 'aside' | 'audi
     | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'head' | 'header' | 'hgroup' | 'hr' | 'html'
     | 'i' | 'iframe' | 'img' | 'input' | 'ins'
     | 'kbd' | 'keygen'
-    | 'label' | 'legend' | 'li' | 'link'
+    | 'legend' | 'li' | 'link'
     | 'main' | 'map' | 'mark' | 'menu' | 'menuitem' | 'meta' | 'meter'
     | 'nav' | 'noscript'
     | 'object' | 'ol' | 'optgroup' | 'option' | 'output'
@@ -217,11 +225,11 @@ export interface Tags extends Rest {
     form: FormHTMLAttributes;
     img: ImgHTMLAttributes;
     input: InputHTMLAttributes;
+    label: LabelHTMLAttributes;
     media: MediaHTMLAttributes;
     textarea: TextareaHTMLAttributes;
     table: TableHTMLAttributes;
     select: SelectHTMLAttributes;
     option: OptionHTMLAttributes;
     script: ScriptHTMLAttributes;
-    style: StyleHTMLAttributes;
 }

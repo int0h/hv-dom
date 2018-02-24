@@ -42,6 +42,7 @@ export interface Events {
     onLoadCapture?: EventHandler<Event>;
     onError?: EventHandler<Event>; // also a Media Event
     onErrorCapture?: EventHandler<Event>; // also a Media Event
+
     // Keyboard Events
     onKeyDown?: EventHandler<KeyboardEvent>;
     onKeyDownCapture?: EventHandler<KeyboardEvent>;
@@ -101,8 +102,9 @@ export interface Events {
     onClickCapture?: EventHandler<MouseEvent>;
     onContextMenu?: EventHandler<MouseEvent>;
     onContextMenuCapture?: EventHandler<MouseEvent>;
-    onDoubleClick?: EventHandler<MouseEvent>;
-    onDoubleClickCapture?: EventHandler<MouseEvent>;
+    onDblClick?: EventHandler<MouseEvent>;
+    // onDoubleClick?: EventHandler<MouseEvent>;
+    // onDoubleClickCapture?: EventHandler<MouseEvent>;
     onDrag?: EventHandler<DragEvent>;
     onDragCapture?: EventHandler<DragEvent>;
     onDragEnd?: EventHandler<DragEvent>;
