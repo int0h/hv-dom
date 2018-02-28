@@ -10,7 +10,7 @@ export type StyleDict = {
 
 export type StyleProp = StyleDict | HyperValue<StyleDict>;
 
-registerGlobalProp<StyleDict | HyperValue<StyleDict>>('style', ({owner, hs, name, value}) => {
+registerGlobalProp<StyleProp>('style', ({owner, hs, name, value}) => {
     const elem = owner.targetNode as HTMLElement;
 
     const styleHv = hs.cast(value);
