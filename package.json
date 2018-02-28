@@ -18,5 +18,8 @@
   "scripts": {
     "test": "node_modules/.bin/nyc node_modules/.bin/ava -v ./dist/tests/**"
   },
-  "dependencies": {}
+  "dependencies": {
+    "hyper-value": "^0.1.0",
+    "hv-jsx": "^0.1.0"
+  }
 }
