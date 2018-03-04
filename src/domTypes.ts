@@ -2,8 +2,11 @@ import {HyperValue} from 'hyper-value';
 
 import {StyleProp} from './style';
 
-import {EventHandler} from './eventTypes';
 export {EventHandler} from './eventTypes';
+
+import {InputProps} from './inputs/input';
+import {TextAreaProps} from './inputs/textArea';
+import {SelectProps} from './inputs/select';
 
 export interface HTMLAttributes extends JSX.GlobalProps, JSX.IntrinsicProps {
     accessKey?: string | HyperValue<string>;
@@ -76,43 +79,6 @@ export interface ImgHTMLAttributes extends HTMLAttributes {
     width?: number | string | HyperValue<number | string>;
 }
 
-export interface InputHTMLAttributes extends HTMLAttributes {
-    accept?: string | HyperValue<string>;
-    alt?: string | HyperValue<string>;
-    autoComplete?: string | HyperValue<string>;
-    autoFocus?: boolean | HyperValue<boolean>;
-    capture?: boolean | HyperValue<boolean>; // https://www.w3.org/TR/html-media-capture/#the-capture-attribute
-    checked?: boolean | HyperValue<boolean>;
-    crossOrigin?: string | HyperValue<string>;
-    disabled?: boolean | HyperValue<boolean>;
-    form?: string | HyperValue<string>;
-    formAction?: string | HyperValue<string>;
-    formEncType?: string | HyperValue<string>;
-    formMethod?: string | HyperValue<string>;
-    formNoValidate?: boolean | HyperValue<boolean>;
-    formTarget?: string | HyperValue<string>;
-    height?: number | string | HyperValue<number | string>;
-    list?: string | HyperValue<string>;
-    max?: number | string | HyperValue<number | string>;
-    maxLength?: number | HyperValue<number>;
-    min?: number | string | HyperValue<number | string>;
-    minLength?: number | HyperValue<number>;
-    multiple?: boolean | HyperValue<boolean>;
-    name?: string | HyperValue<string>;
-    pattern?: string | HyperValue<string>;
-    placeholder?: string | HyperValue<string>;
-    readOnly?: boolean | HyperValue<boolean>;
-    required?: boolean | HyperValue<boolean>;
-    size?: number | HyperValue<number>;
-    src?: string | HyperValue<string>;
-    step?: number | string | HyperValue<number | string>;
-    type?: string | HyperValue<string>;
-    value?: string | string[] | number | HyperValue<string | string[] | number>;
-    width?: number | string | HyperValue<number | string>;
-
-    onChange?: EventHandler<Event>;
-}
-
 export interface MediaHTMLAttributes extends HTMLAttributes {
     autoPlay?: boolean | HyperValue<boolean>;
     controls?: boolean | HyperValue<boolean>;
@@ -125,42 +91,10 @@ export interface MediaHTMLAttributes extends HTMLAttributes {
     src?: string | HyperValue<string>;
 }
 
-export interface TextareaHTMLAttributes extends HTMLAttributes {
-    autoComplete?: string | HyperValue<string>;
-    autoFocus?: boolean | HyperValue<boolean>;
-    cols?: number | HyperValue<number>;
-    dirName?: string | HyperValue<string>;
-    disabled?: boolean | HyperValue<boolean>;
-    form?: string | HyperValue<string>;
-    maxLength?: number | HyperValue<number>;
-    minLength?: number | HyperValue<number>;
-    name?: string | HyperValue<string>;
-    placeholder?: string | HyperValue<string>;
-    readOnly?: boolean | HyperValue<boolean>;
-    required?: boolean | HyperValue<boolean>;
-    rows?: number | HyperValue<number>;
-    value?: string | string[] | number | HyperValue<string | string[] | number>;
-    wrap?: string | HyperValue<string>;
-
-    onChange?: EventHandler<Event>;
-}
-
 export interface TableHTMLAttributes extends HTMLAttributes {
     cellPadding?: number | string | HyperValue<number | string>;
     cellSpacing?: number | string | HyperValue<number | string>;
     summary?: string | HyperValue<string>;
-}
-
-export interface SelectHTMLAttributes extends HTMLAttributes {
-    autoFocus?: boolean | HyperValue<boolean>;
-    disabled?: boolean | HyperValue<boolean>;
-    form?: string | HyperValue<string>;
-    multiple?: boolean | HyperValue<boolean>;
-    name?: string | HyperValue<string>;
-    required?: boolean | HyperValue<boolean>;
-    size?: number | HyperValue<number>;
-    value?: string | string[] | number | HyperValue<string | string[] | number>;
-    onChange?: EventHandler<Event>;
 }
 
 export interface OptionHTMLAttributes extends HTMLAttributes {
@@ -199,7 +133,7 @@ export type RestTags = 'abbr' | 'address' | 'area' | 'article' | 'aside' | 'audi
     | 'em' | 'embed'
     | 'fieldset' | 'figcaption' | 'figure' | 'footer' | 'form'
     | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'head' | 'header' | 'hgroup' | 'hr' | 'html'
-    | 'i' | 'iframe' | 'img' | 'input' | 'ins'
+    | 'i' | 'iframe' | 'img' | 'ins'
     | 'kbd' | 'keygen'
     | 'legend' | 'li' | 'link'
     | 'main' | 'map' | 'mark' | 'menu' | 'menuitem' | 'meta' | 'meter'
@@ -224,12 +158,14 @@ export interface Tags extends Rest {
     canvas: CanvasHTMLAttributes;
     form: FormHTMLAttributes;
     img: ImgHTMLAttributes;
-    input: InputHTMLAttributes;
     label: LabelHTMLAttributes;
     media: MediaHTMLAttributes;
-    textarea: TextareaHTMLAttributes;
     table: TableHTMLAttributes;
-    select: SelectHTMLAttributes;
     option: OptionHTMLAttributes;
     script: ScriptHTMLAttributes;
+
+    // custom:
+    textarea: TextAreaProps;
+    input: InputProps;
+    select: SelectProps;
 }

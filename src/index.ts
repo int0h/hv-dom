@@ -31,6 +31,9 @@ import {
     setProp
 } from './domHelpers';
 
+import './inputs/input';
+import './inputs/select';
+import './inputs/textArea';
 
 export const dom: Target<DomNode, Meta, number, Data> = {
     append,
