@@ -1,4 +1,7 @@
-import {HyperValue, scopes} from 'hyper-value';
+import {HyperValue} from 'hyper-value';
+import {read} from 'hyper-value/hs/read';
+import {cast} from 'hyper-value/hs/cast';
+import {auto} from 'hyper-value/hs/auto';
 
 import {registerGlobalProp} from 'hv-jsx';
 
@@ -13,8 +16,8 @@ export type StyleProp = StyleDict | HyperValue<StyleDict>;
 registerGlobalProp<StyleProp>('style', ({owner, hs, name, value}) => {
     const elem = owner.targetNode as HTMLElement;
 
-    const styleHv = hs.cast(value);
-    hs.auto(() => {
+    const styleHv = cast(value);
+    auto(hs, () => {
         const styles = styleHv.$;
         for (const name in styles) {
             const value = styles[name as keyof StyleDict];
@@ -22,7 +25,7 @@ registerGlobalProp<StyleProp>('style', ({owner, hs, name, value}) => {
             if (value === undefined) {
                 continue;
             }
-            (elem.style as any)[name] = hs.read(value);
+            (elem.style as any)[name] = read(value);
         }
     });
 });

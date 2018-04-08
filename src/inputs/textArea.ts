@@ -1,5 +1,7 @@
 import {HyperValue} from 'hyper-value';
+import {cast} from 'hyper-value/hs/cast';
 import {Component, registerGlobalElem, HyperElm} from 'hv-jsx';
+
 import {EventHandler} from '../eventTypes';
 import {HTMLAttributes} from '../domTypes';
 
@@ -12,7 +14,7 @@ export class TextArea extends Component<TextAreaProps> {
     value: HyperValue<string>;
 
     init() {
-        this.value = this.hs.cast((this.props as any).value || '');
+        this.value = cast((this.props as any).value || '');
     }
 
     handleInput = (e: Event) => {

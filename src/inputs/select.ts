@@ -1,5 +1,7 @@
 import {HyperValue} from 'hyper-value';
+import {cast} from 'hyper-value/hs/cast';
 import {Component, registerGlobalElem, HyperElm} from 'hv-jsx';
+
 import {EventHandler} from '../eventTypes';
 import {HTMLAttributes} from '../domTypes';
 
@@ -16,9 +18,9 @@ export class Select extends Component<SelectProps> {
     selectedOptions: HyperValue<Array<HTMLOptionElement>>;
 
     init() {
-        this.value = this.hs.cast(this.props.value || '');
-        this.selectedIndex = this.hs.cast(this.props.selectedIndex || -1);
-        this.selectedOptions = this.hs.cast(this.props.selectedOptions || []);
+        this.value = cast(this.props.value || '');
+        this.selectedIndex = cast(this.props.selectedIndex || -1);
+        this.selectedOptions = cast(this.props.selectedOptions || []);
     }
 
     handleInput = (e: Event) => {

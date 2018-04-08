@@ -1,6 +1,8 @@
 import {HyperValue} from 'hyper-value';
+import {cast} from 'hyper-value/hs/cast';
 import {Component, registerGlobalElem, HyperElm} from 'hv-jsx';
 import {EventHandler} from '../eventTypes';
+
 import {HTMLAttributes} from '../domTypes';
 
 export const textTypes = {
@@ -56,8 +58,8 @@ export class Input extends Component<InputProps> {
     checked: HyperValue<boolean>;
 
     init() {
-        this.value = this.hs.cast((this.props as any).value || '');
-        this.checked = this.hs.cast((this.props as any).checked || false);
+        this.value = cast((this.props as any).value || '');
+        this.checked = cast((this.props as any).checked || false);
     }
 
     handleInput = (eventName: 'onInput' | 'onChange') => (e: Event) => {
